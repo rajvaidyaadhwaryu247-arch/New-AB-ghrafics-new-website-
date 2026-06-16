@@ -1,7 +1,4 @@
 import { Service, Package, PortfolioItem, CaseStudy, BeforeAfterItem, Testimonial } from './types';
-import jeEducationFlyer from './assets/images/junior_einstein_education_flyer_1781615510520.jpg';
-import jeBrandingSuite from './assets/images/junior_einstein_branding_suite_1781615529941.jpg';
-import jeCampaignPoster from './assets/images/junior_einstein_campaign_poster_1781615553456.jpg';
 
 export const SERVICES_DATA: Service[] = [
   {
@@ -167,27 +164,6 @@ export const PACKAGES_DATA: Package[] = [
 ];
 
 export const PORTFOLIO_DATA: PortfolioItem[] = [
-  {
-    id: "je-edu",
-    title: "Junior Einstein Flagship Course Flyer",
-    category: "education",
-    imageUrl: jeEducationFlyer,
-    description: "Academic promo layout highlighting CBSE/MHT-CET/JEE classes, structured batch timings, NDA selection boards, and integrated student course modules for high conversion output."
-  },
-  {
-    id: "je-brand",
-    title: "Junior Einstein Unified Educational Branding Suite",
-    category: "branding",
-    imageUrl: jeBrandingSuite,
-    description: "TIM-SS and STEM consistent visual assets: Students and lecturers high-end identification cards, letterheads, progress reports, and standard signage rules."
-  },
-  {
-    id: "je-camp",
-    title: "'Formula of Success' Physics Poster Layout",
-    category: "posters",
-    imageUrl: jeCampaignPoster,
-    description: "Chalk-stylized high-contrast chemistry formulas and physics equations. Intelligently engineered as a physical flyer and Instagram post to drive maximum student recruitment."
-  },
   {
     id: "premium-reels-1",
     title: "Reels Vertical Motion Graphics - Hook Concept",

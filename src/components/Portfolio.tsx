@@ -96,15 +96,23 @@ export default function Portfolio() {
               >
                 {/* Image / Video thumbnail Wrap */}
                 <div className="relative w-full h-[240px] overflow-hidden bg-black/40 flex items-center justify-center">
+                  {item.featured && (
+                    <div className="absolute top-4 left-4 px-2 py-1 rounded bg-[#00E5FF] text-black text-[9px] font-mono font-black uppercase tracking-widest shadow-lg shadow-[#00E5FF]/30 flex items-center gap-1 z-20">
+                      <Sparkles className="w-2.5 h-2.5 text-black animate-pulse" />
+                      Featured
+                    </div>
+                  )}
+
                   <img
                     src={item.imageUrl}
                     alt={item.title}
                     referrerPolicy="no-referrer"
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                   />
                   
                   {item.videoUrl && (
-                    <div className="absolute top-4 right-4 p-2 rounded-full bg-black/60 border border-white/20 text-cyan-400">
+                    <div className="absolute top-4 right-4 p-2 rounded-full bg-black/60 border border-white/20 text-cyan-400 z-10">
                       <Play className="w-3.5 h-3.5 fill-cyan-400 text-cyan-400" />
                     </div>
                   )}
@@ -123,9 +131,16 @@ export default function Portfolio() {
                 {/* Info area */}
                 <div className="p-6 bg-[#0A0A0F] flex-grow flex flex-col justify-between border-t border-white/5 relative z-10">
                   <div>
-                    <span className="text-[9px] font-mono tracking-widest text-[#00E5FF] uppercase block mb-1">
-                      {tabLabels[item.category] || item.category}
-                    </span>
+                    <div className="flex items-center justify-between gap-2 mb-1.5">
+                      <span className="text-[9px] font-mono tracking-widest text-[#00E5FF] uppercase block">
+                        {tabLabels[item.category] || item.category}
+                      </span>
+                      {item.projectType && (
+                        <span className="text-[8px] font-mono text-neutral-400 uppercase tracking-wider bg-white/5 px-1.5 py-0.5 rounded">
+                          {item.projectType}
+                        </span>
+                      )}
+                    </div>
                     <h3 className="font-display font-bold text-sm text-neutral-100 group-hover:text-white transition-colors line-clamp-1">
                       {item.title}
                     </h3>
@@ -213,9 +228,15 @@ export default function Portfolio() {
                     </button>
                   </div>
 
-                  <h3 className="font-display font-bold text-lg text-white leading-tight mb-3">
+                  <h3 className="font-display font-bold text-lg text-white leading-tight mb-2">
                     {selectedItem.title}
                   </h3>
+
+                  {selectedItem.projectType && (
+                    <div className="text-[10px] font-mono text-[#00E5FF] uppercase tracking-wider mb-4 px-2 py-1 bg-[#00E5FF]/10 border border-[#00E5FF]/20 rounded inline-block">
+                      {selectedItem.projectType}
+                    </div>
+                  )}
 
                   <p className="font-sans text-xs text-neutral-400 leading-relaxed font-light whitespace-pre-line">
                     {selectedItem.description}

@@ -22,6 +22,8 @@ export interface PortfolioItem {
   imageUrl: string;
   videoUrl?: string;
   description: string;
+  projectType?: string;
+  featured?: boolean;
 }
 
 export interface CaseStudy {
