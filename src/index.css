@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-brand-black: #050508;
+  --color-brand-dark: #0A0A0F;
+  --color-brand-gray: #12121A;
+  --color-neon-blue: #00E5FF;
+  --color-neon-purple: #8B5CF6;
+  --color-neon-pink: #EC4899;
+  --color-neon-orange: #F97316;
+}
+
+@layer utilities {
+  /* Premium Glow effects */
+  .text-glow-blue {
+    text-shadow: 0 0 15px rgba(0, 229, 255, 0.6), 0 0 2px rgba(0, 229, 255, 1);
+  }
+  .text-glow-purple {
+    text-shadow: 0 0 15px rgba(139, 92, 246, 0.6), 0 0 2px rgba(139, 92, 246, 1);
+  }
+  .text-glow-pink {
+    text-shadow: 0 0 15px rgba(236, 72, 153, 0.6), 0 0 2px rgba(236, 72, 153, 1);
+  }
+  .text-glow-orange {
+    text-shadow: 0 0 15px rgba(249, 115, 22, 0.6), 0 0 2px rgba(249, 115, 22, 1);
+  }
+
+  .shadow-glow-blue {
+    box-shadow: 0 0 25px -5px rgba(0, 229, 255, 0.4), 0 0 10px -3px rgba(0, 229, 255, 0.2);
+  }
+  .shadow-glow-purple {
+    box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.4), 0 0 10px -3px rgba(139, 92, 246, 0.2);
+  }
+  .shadow-glow-pink {
+    box-shadow: 0 0 25px -5px rgba(236, 72, 153, 0.4), 0 0 10px -3px rgba(236, 72, 153, 0.2);
+  }
+  .shadow-glow-orange {
+    box-shadow: 0 0 25px -5px rgba(249, 115, 22, 0.4), 0 0 10px -3px rgba(249, 115, 22, 0.2);
+  }
+
+  /* High-end Glassmorphism styling */
+  .glassmorphism {
+    background: rgba(10, 10, 15, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .glassmorphism-light {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .glassmorphism-glow-blue {
+    background: rgba(0, 229, 255, 0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+  }
+
+  .glassmorphism-glow-purple {
+    background: rgba(139, 92, 246, 0.05);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+  }
+
+  /* Premium border light gradient beam */
+  .border-gradient-blue-purple {
+    border-image: linear-gradient(to right, #00E5FF, #8B5CF6) 1;
+  }
+  
+  .border-gradient-orange-pink {
+    border-image: linear-gradient(to right, #F97316, #EC4899) 1;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050508;
+}
+::-webkit-scrollbar-thumb {
+  background: #1a1a26;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2b2b3d;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-brand-black);
+}
+
+/* Smooth neon pulse animations */
+@keyframes neonPulse {
+  0%, 100% {
+    opacity: 0.15;
+    filter: blur(100px) saturate(1.5);
+  }
+  50% {
+    opacity: 0.35;
+    filter: blur(120px) saturate(2);
+  }
+}
+
+.ambient-neon-glow-blue {
+  animation: neonPulse 8s infinite ease-in-out;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.35) 0%, rgba(0,0,0,0) 70%);
+}
+
+.ambient-neon-glow-purple {
+  animation: neonPulse 10s infinite ease-in-out;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, rgba(0,0,0,0) 70%);
+}
+
+.ambient-neon-glow-pink {
+  animation: neonPulse 9s infinite ease-in-out;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, rgba(0,0,0,0) 70%);
+}
+
+.ambient-neon-glow-orange {
+  animation: neonPulse 7s infinite ease-in-out;
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.25) 0%, rgba(0,0,0,0) 70%);
+}

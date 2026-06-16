@@ -1,0 +1,6 @@
+{
+  "name": "AB Graphics",
+  "description": "AB Graphics - Premium Graphic Design & Digital Marketing Agency featuring high-end digital marketing solutions, animated results counters, and an interactive AI Growth Advisor.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" fill="none">
+  <!-- Gradients -->
+  <defs>
+    <linearGradient id="ab-grad-blue-top" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00E5FF" />
+      <stop offset="100%" stop-color="#0072FF" />
+    </linearGradient>
+    <linearGradient id="ab-grad-purple-bottom" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0072FF" />
+      <stop offset="50%" stop-color="#7000FF" />
+      <stop offset="100%" stop-color="#B300FF" />
+    </linearGradient>
+    <linearGradient id="ab-grad-orange-top" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF007A" />
+      <stop offset="50%" stop-color="#FF5C00" />
+      <stop offset="100%" stop-color="#FFC700" />
+    </linearGradient>
+    <linearGradient id="ab-grad-pink-inner" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#D500F9" />
+      <stop offset="100%" stop-color="#FF1744" />
+    </linearGradient>
+    <linearGradient id="ab-grad-right-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFD600" />
+      <stop offset="100%" stop-color="#FF6D00" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Side: 'A' Ribbon -->
+  <path
+    d="M 245,60 L 245,180 C 245,180 220,100 155,140 C 130,155 120,190 120,205 L 120,145 C 120,130 140,90 195,73 L 245,60 Z"
+    fill="url(#ab-grad-blue-top)"
+  />
+  <path
+    d="M 120,205 C 120,250 145,275 195,305 L 245,337 C 245,337 235,280 210,280 C 185,280 158,255 158,225 L 158,217 L 210,217 C 235,217 245,205 245,190 L 245,180 L 245,260 L 245,337 L 245,360 C 245,360 210,310 150,265 C 120,242 120,210 120,205 Z"
+    fill="url(#ab-grad-purple-bottom)"
+  />
+
+  <!-- Right Side: 'B' Ribbon -->
+  <path
+    d="M 258,60 L 270,63 C 320,76 370,115 370,175 C 370,230 320,255 300,263 C 280,270 258,273 258,273 C 258,273 300,255 325,235 C 352,213 352,175 325,145 C 298,115 258,115 258,115 Z"
+    fill="url(#ab-grad-orange-top)"
+  />
+  <path
+    d="M 258,115 C 258,115 288,115 315,135 C 335,150 338,170 328,187 C 318,204 295,220 258,230 L 258,300 C 258,300 285,285 315,275 C 350,263 375,235 375,190 C 375,155 350,133 328,123 C 300,110 258,110 258,115 Z"
+    fill="url(#ab-grad-pink-inner)"
+    opacity="0.9"
+  />
+  <path
+    d="M 258,273 C 258,273 288,270 315,287 C 345,305 375,337 375,375 C 375,410 320,455 270,460 L 258,463 L 258,355 L 258,273 Z"
+    fill="url(#ab-grad-right-glow)"
+  />
+  <path
+    d="M 258,305 C 258,305 280,305 310,325 C 340,345 348,375 330,405 C 310,435 275,440 258,440 Z"
+    fill="url(#ab-grad-orange-top)"
+    opacity="0.85"
+  />
+</svg>
