@@ -60,43 +60,61 @@ app.post("/api/advisor", async (req, res) => {
     const hasApiKey = !!process.env.GEMINI_API_KEY;
 
     if (!hasApiKey) {
-      console.log("No GEMINI_API_KEY found, returning premium rule-based analysis");
+      console.log("No GEMINI_API_KEY found, returning premium rule-based AI consultant analysis");
       
-      const suggestedServices = [];
-      if (goal.toLowerCase().includes("lead") || goal.toLowerCase().includes("sale")) {
-        suggestedServices.push("Lead Generation", "Meta Ads Management", "Business Growth Strategy");
-      } else if (goal.toLowerCase().includes("brand") || goal.toLowerCase().includes("logo")) {
-        suggestedServices.push("Branding", "Logo Design", "Social Media Design");
-      } else {
-        suggestedServices.push("Instagram Growth", "Social Media Design", "Reel Editing");
+      const pUpper = (budget || '').toUpperCase();
+      let recommendedPackage = "Growth Package";
+      if (pUpper.includes("STARTER") || pUpper.includes("10K")) {
+        recommendedPackage = "Starter Package";
+      } else if (pUpper.includes("PREMIUM") || pUpper.includes("75K")) {
+        recommendedPackage = "Premium Package";
       }
 
-      return res.json({
-        brandingScore: 68,
-        marketingScore: 55,
-        leadGenScore: 62,
-        localVisibilityScore: 48,
-        overallScore: 58,
-        suggestions: [
-          `Upgrade the social media brand identity of '${businessName}' immediately to appeal to premium clients in ${city}.`,
-          `Set up CRM WhatsApp automation to streamline inquiries with instant auto-responses instead of answering manually.`,
-          `Run regional high-conversion meta ads targeting a monthly budget of ${budget} using visual-hook design patterns.`,
-          `Optimize your Google Business Profile listing and local SEO to attract local ${city} customers looking for ${businessType} services.`
-        ],
-        recommendedServices: suggestedServices,
-        reportText: `Prepared for: ${businessName} in ${city}
-        
-Your ${businessType} business currently stands at a crucial growth inflection point. To reach your target profile of ${monthlyCustomers || "high-intent"} monthly customers, establishing immediate brand consistency is essential. 
+      const recommendedServices = [];
+      const gLower = goal.toLowerCase();
+      if (gLower.includes("lead") || gLower.includes("sale") || gLower.includes("customer")) {
+        recommendedServices.push("Lead Generation", "Meta Ads Management", "WhatsApp Automation");
+      } else if (gLower.includes("brand") || gLower.includes("logo") || gLower.includes("authority")) {
+        recommendedServices.push("Branding", "Logo Design", "Graphic Design");
+      } else if (gLower.includes("reel") || gLower.includes("instagram") || gLower.includes("traffic")) {
+        recommendedServices.push("Instagram Growth", "Reel Editing", "Social Media Design");
+      } else {
+        recommendedServices.push("Google Business Profile Setup", "Lead Generation", "Poster Design");
+      }
 
-Based on your main goal of "${goal}", we recommend starting with high-contrast, premium layouts for Instagram reels to boost organic traffic, accompanied by optimized lead-generation creatives. Elevate your presence to professional agency level with AB Graphics to build trust, reduce customer acquisition cost, and systematically scale conversion output.`
-      });
+      const responseJSON = {
+        businessAnalysis: `For ${businessName}, operating in the competitive ${city} ${businessType} landscape, achieving your target of ${monthlyCustomers || "high-intent monthly clients"} requires a radical shift from legacy organic reach to high-authority visual design and systematic digital funnel strategy. Your current main focus is "${goal}", which requires immediate visual asset harmonization to build genuine market trust. Without conversion-optimized design elements, traditional advertising spend faces severe friction.`,
+        marketingProblems: [
+          `Lack of consistent high-end luxury visual identity across customer-facing touchpoints.`,
+          `Friction in lead tracking and manual call-to-action systems, resulting in leaked prospects.`,
+          `Organic search invisibility in ${city} compared to regional directory aggregates.`
+        ],
+        growthOpportunities: [
+          `Leveraging high-retention 9:16 vertical video formats (Instagram Reels) with dynamic motion callouts to trigger viral distribution.`,
+          `Implementing region-targeted Meta and Google search campaigns coupled with custom high-converting WhatsApp lead funnels.`,
+          `Optimizing Google Local Pack map ranking to capture immediate demand from close-proximity buyers.`
+        ],
+        recommendedActions: [
+          `Overhaul your core logo, branding style guidelines, and high-contrast signage assets.`,
+          `Deploy an automated WhatsApp CRM sequence to provide 2-second initial response times.`,
+          `Allocate dynamic budget scales to local search keywords to dominate immediate regional intents.`
+        ],
+        recommendedServices: recommendedServices,
+        recommendedPackage: recommendedPackage,
+        roadmap30Days: `Phase 1 (Branding & Identity): Completely synchronize ${businessName}'s digital assets under a unified typography and high-contrast color strategy. Develop custom high-fidelity logos, premium banners, and set up your optimized Google Business Profile to build local search trust in ${city}. Establish initial asset libraries for immediate publishing.`,
+        roadmap60Days: `Phase 2 (Acquisition & Loop): Launch targeted social media campaigns utilizing premium vertical reel editing techniques with hook structures. Initiate local SEO citation building and launch conversion-focused local ad packages to drive qualified leads. Integrate automated message landing paths.`,
+        roadmap90Days: `Phase 3 (Optimization & Scaling): Deploy automated WhatsApp sales triggers to convert active inquiries instantly into closed sales. Analyze campaign performance feedback, scale-up high conversion ad groups to support your ${monthlyCustomers || "target"} customer targets, and build premium retargeting campaigns.`,
+        marketingStrategy: `Our chief strategic recommendation for ${businessName} is to establish brand-driven client acquisition. By pairing hand-crafted premium visual presentation with hyper-targeted lead capture systems, we bypass general platform fatigue and speak directly to luxury intents. AB Graphics is ready to execute this custom plan end-to-end to skyrocket your customer revenue.`
+      };
+
+      return res.json(responseJSON);
     }
 
     // Initialize Gemini Client
     const ai = getGeminiClient();
 
-    const prompt = `You are the chief Executive AI Brand Consultant at 'AB Graphics' (India's premier high-end graphic design & performance marketing agency).
-Develop an immersive, professional, and rigorous brand growth audit report based on these core parameters:
+    const prompt = `You are the ultimate Chief Executive Digital Marketing Strategist and Brand Consultant at 'AB Graphics' (India's premier high-end graphic design & performance marketing agency).
+Develop an immersive, professional, and highly strategic digital marketing roadmap and business analysis report based on these core parameters:
 - Business Name: ${businessName}
 - Business Type: ${businessType}
 - Target City/Market: ${city}
@@ -106,15 +124,25 @@ Develop an immersive, professional, and rigorous brand growth audit report based
 - Main Dynamic Growth Goal: ${goal}
 - Monthly Target Customers: ${monthlyCustomers || "Not Provided"}
 
-Based on these business specifications, perform a precise diagnostic and return exactly a JSON object containing:
-1. brandingScore (integer from 30 to 95): representing current visual authority.
-2. marketingScore (integer from 30 to 95): representing digital advertising sophistication.
-3. leadGenScore (integer from 30 to 95): representing customer capture/retention conversion funnel health.
-4. localVisibilityScore (integer from 30 to 95): representing search presence / regional geographic trust.
-5. overallScore (integer from 30 to 95): representing their absolute overall growth posture.
-6. suggestions (array of exactly 4 strings): direct, actionable graphic design, video branding, and lead generation suggestions addressing their goal.
-7. recommendedServices (array of exactly 3 strings): selected from ${AVAILABLE_SERVICES.join(", ")}.
-8. reportText (string, ~150-200 words): A comprehensive growth strategy audit that references their city, business name, goal, monthly budget, and explains why AB Graphics specialized deliverables will help them win.
+IMPORTANT: Keep it purely professional, strategic, conversion-oriented, and tailored specifically to the AB Graphics service spectrum. Do NOT include any type of visual score calculation, branding points, numbers rating the brand, or percentages. Focus entirely on realistic roadmap deliverables. Under no circumstances should you generate any rating calculations or generic placeholder scores.
+
+We offer these premium services: ${AVAILABLE_SERVICES.join(", ")}.
+We offer three tailored tiers of packages:
+- Starter Package (ideal for budget Rs 10k-25k, includes core graphic design, logos, and standard posters/banners)
+- Growth Package (ideal for Rs 25k-75k, adds SMM, Google Business Profile, Reel Editing, and Organic Instagram growth)
+- Premium Package (ideal for Rs 75k+, adds Meta Ads Management, Google Ads, Lead Generation, and Custom CRM Automation)
+
+Based on these business specifications, perform a detailed diagnostic and return exactly a JSON object containing:
+1. businessAnalysis (string, ~100-150 words): Deep strategic analysis of the company's positioning, core challenges and path forward in ${city}.
+2. marketingProblems (array of exactly 3 strings): Specific, critical current marketing issues or gaps they are likely facing.
+3. growthOpportunities (array of exactly 3 strings): Lucrative, state-of-the-art growth channels or tactics they should exploit to meet their specific goal.
+4. recommendedActions (array of exactly 3 strings): High-impact actions they can take right away.
+5. recommendedServices (array of exactly 3 strings): Selected from our AVAILABLE_SERVICES pool above.
+6. recommendedPackage (string): Either "Starter Package", "Growth Package", or "Premium Package" based on their goals and budget scale.
+7. roadmap30Days (string, ~80 words): Phase 1: High-impact initial setup, essential structural fixes, visual identity updates, and immediate quick-wins.
+8. roadmap60Days (string, ~80 words): Phase 2: Launch active growth campaigns, content loops, and targeted organic/paid user acquisition.
+9. roadmap90Days (string, ~80 words): Phase 3: Scale processes, apply analytics feedback, integrate lead automation pipelines, and optimize retention.
+10. marketingStrategy (string, ~120 words): Free custom-tailored elite digital marketing strategy summary.
 
 Return strictly JSON matching the required schema. No markdown wrapping.`;
 
@@ -126,35 +154,40 @@ Return strictly JSON matching the required schema. No markdown wrapping.`;
         responseSchema: {
           type: Type.OBJECT,
           required: [
-            "brandingScore",
-            "marketingScore",
-            "leadGenScore",
-            "localVisibilityScore",
-            "overallScore",
-            "suggestions",
+            "businessAnalysis",
+            "marketingProblems",
+            "growthOpportunities",
+            "recommendedActions",
             "recommendedServices",
-            "reportText"
+            "recommendedPackage",
+            "roadmap30Days",
+            "roadmap60Days",
+            "roadmap90Days",
+            "marketingStrategy"
           ],
           properties: {
-            brandingScore: { type: Type.INTEGER },
-            marketingScore: { type: Type.INTEGER },
-            leadGenScore: { type: Type.INTEGER },
-            localVisibilityScore: { type: Type.INTEGER },
-            overallScore: { type: Type.INTEGER },
-            suggestions: {
+            businessAnalysis: { type: Type.STRING },
+            marketingProblems: {
               type: Type.ARRAY,
-              items: { type: Type.STRING },
-              description: "Exactly 4 distinct, custom technical/visual recommendations."
+              items: { type: Type.STRING }
+            },
+            growthOpportunities: {
+              type: Type.ARRAY,
+              items: { type: Type.STRING }
+            },
+            recommendedActions: {
+              type: Type.ARRAY,
+              items: { type: Type.STRING }
             },
             recommendedServices: {
               type: Type.ARRAY,
-              items: { type: Type.STRING },
-              description: "Exactly 3 recommended services from AB Graphics services list."
+              items: { type: Type.STRING }
             },
-            reportText: {
-              type: Type.STRING,
-              description: "Detailed, personalized premium business growth report text."
-            }
+            recommendedPackage: { type: Type.STRING },
+            roadmap30Days: { type: Type.STRING },
+            roadmap60Days: { type: Type.STRING },
+            roadmap90Days: { type: Type.STRING },
+            marketingStrategy: { type: Type.STRING }
           }
         },
         temperature: 0.85,
@@ -170,11 +203,48 @@ Return strictly JSON matching the required schema. No markdown wrapping.`;
     return res.json(plan);
 
   } catch (err: any) {
-    console.error("Gemini Advisor API Error:", err);
-    return res.status(500).json({
-      error: "Encountered an issue analyzing your brand roadmap. Please try again or reach out on WhatsApp directly!",
-      details: err.message
-    });
+    console.error("Gemini Advisor API Error, issuing fallback rescue:", err);
+    // Rescue with elegant fallback structure if parsing raw model text broke or failed
+    try {
+      const budgetSeed = req.body?.budget || '';
+      const pUpper = budgetSeed.toUpperCase();
+      let recommendedPackage = "Growth Package";
+      if (pUpper.includes("STARTER") || pUpper.includes("10K")) {
+        recommendedPackage = "Starter Package";
+      } else if (pUpper.includes("PREMIUM") || pUpper.includes("75K")) {
+        recommendedPackage = "Premium Package";
+      }
+
+      const fallJSON = {
+        businessAnalysis: `For ${req.body?.businessName || "your business"}, operating in the competitive ${req.body?.city || "local"} market, achieving your target monthly customer count requires a complete shift to high-end design assets. Your goal of "${req.body?.goal || "Growth"}" requires visual clarity and premium digital funnels.`,
+        marketingProblems: [
+          `Lack of consistent graphic design, brand logo styling, and typography sync.`,
+          `Inefficient customer engagement loop causing lead leakage.`,
+          `Low regional visibility compared to competitors.`
+        ],
+        growthOpportunities: [
+          `Adopting high-hook Reels templates to grow organically on Instagram.`,
+          `Launching local conversion-oriented Meta and Google Search campaigns.`,
+          `Optimizing regional presence with localized Business profiles.`
+        ],
+        recommendedActions: [
+          `Overhaul company logo, presentation style, and marketing banner materials.`,
+          `Deploy streamlined WhatsApp routing from visual marketing ads.`,
+          `Focus budget on high-quality regional localized search keywords.`
+        ],
+        recommendedServices: ["Lead Generation", "Reel Editing", "Branding"],
+        recommendedPackage: recommendedPackage,
+        roadmap30Days: `Phase 1: Setup visual styles, design custom professional logos, establish brand guidelines template, and perfect the Google Business Profiles setup.`,
+        roadmap60Days: `Phase 2: Begin organic vertical reel templates publishing on social profiles, initiate targeted local ads campaigns, and setup messaging funnels.`,
+        roadmap90Days: `Phase 3: Integrate automated WhatsApp lead tracking workflows, evaluate marketing strategy insights data, and focus performance ads budget on elite keywords.`,
+        marketingStrategy: `Combine premium visual graphics crafted by AB Graphics with dynamic regional performance funnels. Elevate trust to secure low-friction customer handoffs and systematic revenue scaling.`
+      };
+      return res.json(fallJSON);
+    } catch {
+      return res.status(500).json({
+        error: "Failed to establish strategic advisor insights. Please fallback directly to WhatsApp info capture.",
+      });
+    }
   }
 });
 
