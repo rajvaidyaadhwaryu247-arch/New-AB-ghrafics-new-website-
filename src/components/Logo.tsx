@@ -1,5 +1,5 @@
 import React from 'react';
-import logoImg from '../assets/images/ab_graphics_black_logo_1781615800353.jpg';
+import logoImg from '../assets/images/ab_graphics_black_logo_1781615800353.jpg.png';
 
 interface LogoProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   showText?: boolean;
